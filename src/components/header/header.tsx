@@ -9,7 +9,12 @@ const HeaderComponent = () => {
     <CustomHeader>
       <Container maxW="container.xl">
         <CustomPicture>
-          <Image src={Logo} layout="intrinsic" />
+          <Image
+            alt="Logo Itaú seguros"
+            src={Logo}
+            layout="intrinsic"
+            quality="100"
+          />
         </CustomPicture>
       </Container>
     </CustomHeader>

@@ -9,5 +9,5 @@ export const CustomHeader = styled.header`
 
 export const CustomPicture = styled.picture`
   display: block;
-  width: 150px;
+  width: 130px;
 `;
