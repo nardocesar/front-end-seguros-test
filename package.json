@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/node": "16.11.10",
     "@types/react": "17.0.37",
+    "@types/styled-components": "^5.1.15",
     "eslint": "7",
     "eslint-config-next": "12.0.4",
     "msw": "^0.35.0",
