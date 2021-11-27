@@ -5,9 +5,7 @@ const LayoutComponent = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <HeaderComponent />
-      <Container maxW="container.xl">
-        <main>{children}</main>
-      </Container>
+      <main>{children}</main>
     </>
   );
 };
