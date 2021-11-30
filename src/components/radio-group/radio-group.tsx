@@ -1,5 +1,6 @@
 import { Box, Heading } from "@chakra-ui/react";
 import { FormikErrors } from "formik/dist/types";
+import { FormFields } from "../../models/entities";
 import { QuestionField } from "../../modules/form/form";
 import RadioButtonComponent from "./radio-button";
 
@@ -26,20 +27,10 @@ const RadioGroupComponent = ({
     field: string,
     value: any,
     shouldValidate?: boolean | undefined
-  ) =>
-    | Promise<void>
-    | Promise<
-        FormikErrors<{
-          question1: number;
-          question2: number;
-          question3: number;
-          question4: number;
-          question5: number;
-        }>
-      >;
+  ) => Promise<void> | Promise<FormikErrors<FormFields>>;
   nextStep: () => void;
 }) => (
-  <Box as="article" mt="12" mb="4" width="100%">
+  <Box as="article" width="100%">
     <Heading as="h3" size="lg" textAlign="center">
       {title}
     </Heading>
