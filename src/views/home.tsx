@@ -1,5 +1,5 @@
 import JumbotronComponent from "../components/jumbotron";
-import FormModule from "./form";
+import FormModule from "../modules/form";
 
 const HomeModule = () => {
   return (
