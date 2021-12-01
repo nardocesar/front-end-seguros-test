@@ -9,7 +9,9 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { FormikErrors } from "formik/dist/types";
-import { FormFields } from "../../../models/entities";
+import { useCallback, useEffect } from "react";
+import { FormFields, ViaCepResponse } from "../../../models/entities";
+import { useFindCepMutation } from "../../../mutations";
 
 const PersonalDataForm = ({
   indexToShow,
@@ -26,6 +28,33 @@ const PersonalDataForm = ({
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<FormFields>>;
 }) => {
+  const { mutate, status, reset, data } = useFindCepMutation();
+
+  const setValuesFromCep = useCallback(
+    (data: ViaCepResponse) => {
+      setFieldValue("address", data.logradouro);
+      setFieldValue("complement", data.complemento);
+      setFieldValue("neighborhood", data.bairro);
+      setFieldValue("city", data.localidade);
+      setFieldValue("state", data.uf);
+    },
+    [setFieldValue]
+  );
+
+  useEffect(() => {
+    if (values.cep.length !== 8) {
+      reset();
+    } else {
+      mutate({ cep: values.cep });
+    }
+  }, [values, mutate, reset]);
+
+  useEffect(() => {
+    if (data) {
+      setValuesFromCep(data);
+    }
+  }, [data, setValuesFromCep]);
+
   switch (indexToShow) {
     case 0:
       return (
@@ -76,13 +105,19 @@ const PersonalDataForm = ({
               <Input
                 type="text"
                 value={values.cep}
+                maxLength={8}
                 onChange={(event) => setFieldValue("cep", event.target.value)}
               />
             </FormControl>
           </HStack>
           <Box height="16px" />
           <Center>
-            <Button onClick={nextStep} type="button" colorScheme="orange">
+            <Button
+              onClick={nextStep}
+              type="button"
+              colorScheme="orange"
+              isLoading={status === "loading"}
+            >
               Próximo
             </Button>
           </Center>
@@ -97,6 +132,7 @@ const PersonalDataForm = ({
               <Input
                 type="text"
                 value={values.address}
+                disabled={Boolean(values.address)}
                 onChange={(event) =>
                   setFieldValue("address", event.target.value)
                 }
@@ -107,6 +143,7 @@ const PersonalDataForm = ({
               <Input
                 type="text"
                 value={values.number}
+                disabled={Boolean(values.number)}
                 onChange={(event) =>
                   setFieldValue("number", event.target.value)
                 }
@@ -117,6 +154,7 @@ const PersonalDataForm = ({
               <Input
                 type="text"
                 value={values.complement}
+                disabled={Boolean(values.complement)}
                 onChange={(event) =>
                   setFieldValue("complement", event.target.value)
                 }
@@ -130,6 +168,7 @@ const PersonalDataForm = ({
               <Input
                 type="text"
                 value={values.neighborhood}
+                disabled={Boolean(values.neighborhood)}
                 onChange={(event) =>
                   setFieldValue("neighborhood", event.target.value)
                 }
@@ -140,6 +179,7 @@ const PersonalDataForm = ({
               <Input
                 type="text"
                 value={values.city}
+                disabled={Boolean(values.city)}
                 onChange={(event) => setFieldValue("city", event.target.value)}
               />
             </FormControl>
@@ -148,6 +188,7 @@ const PersonalDataForm = ({
               <Input
                 type="text"
                 value={values.state}
+                disabled={Boolean(values.state)}
                 onChange={(event) => setFieldValue("state", event.target.value)}
               />
             </FormControl>
