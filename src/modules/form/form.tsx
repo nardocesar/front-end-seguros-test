@@ -30,7 +30,7 @@ interface RadioQuestion {
   title: string;
   options: Array<RadioButtonProps>;
 }
-const firstFormSteps: Array<RadioQuestion> = [
+export const firstFormSteps: Array<RadioQuestion> = [
   {
     name: "1c1f1c9d-fa98-49f0-8eac-d78ed1e40696",
     title: "o imóvel está:",
