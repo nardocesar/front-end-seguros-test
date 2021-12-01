@@ -29,4 +29,14 @@ export interface FormFields {
   coverage11: "sim" | "não";
   coverage12: "sim" | "não";
   coverage13: "sim" | "não";
+  name: string;
+  cpf: string;
+  birthdate: string;
+  cep: string;
+  address: string;
+  number: string;
+  complement?: string;
+  neighborhood: string;
+  city: string;
+  state: string;
 }

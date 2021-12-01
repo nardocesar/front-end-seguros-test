@@ -1,6 +1,6 @@
 import { Box, Heading, Container, Button, Center } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RadioGroupComponent from "../../components/radio-group";
 import { RadioButtonProps } from "../../components/radio-group/radio-group";
 import InsuranceCoverageComponent from "../../components/insurance-coverage";
@@ -14,9 +14,9 @@ import VazTubIcon from "../../assets/icons/vaz-tub";
 import PagAluguelIcon from "../../assets/icons/pag-aluguel";
 import VendavalIcon from "../../assets/icons/vendaval";
 import TremorIcon from "../../assets/icons/tremor";
-import RespEmpregadorIcon from "../../assets/icons/resp-empregador";
 import ImpactoVeiculoIcon from "../../assets/icons/impacto-veiculo";
 import SubBikeIcon from "../../assets/icons/sub-bike";
+import PersonalDataForm from "./components/personal-data-form";
 
 export type QuestionField =
   | "question1"
@@ -320,6 +320,7 @@ const coverageSteps: Array<InsuranceCoverageItem> = [
 
 const FormModule = () => {
   const [step, setStep] = useState(0);
+  const [formModuleToShow, setFormModuleToShow] = useState(0);
 
   const { values, setFieldValue, handleChange, handleBlur, handleSubmit } =
     useFormik<FormFields>({
@@ -342,13 +343,23 @@ const FormModule = () => {
         coverage11: "sim",
         coverage12: "sim",
         coverage13: "sim",
+        name: "",
+        cpf: "",
+        birthdate: "",
+        cep: "",
+        address: "",
+        number: "",
+        complement: "",
+        neighborhood: "",
+        city: "",
+        state: "",
       },
       onSubmit: (data) => console.log(data),
     });
 
   const nextStep = useCallback(
     () =>
-      step < firstFormSteps.length + coverageSteps.length
+      step < firstFormSteps.length + coverageSteps.length + 3
         ? setStep(step + 1)
         : null,
     [step]
@@ -357,6 +368,23 @@ const FormModule = () => {
     () => (step > 0 ? setStep(step - 1) : null),
     [step]
   );
+
+  useEffect(() => {
+    if (step < firstFormSteps.length - 1) {
+      setFormModuleToShow(0);
+    }
+
+    if (
+      step > firstFormSteps.length - 1 &&
+      step < firstFormSteps.length + coverageSteps.length
+    ) {
+      setFormModuleToShow(1);
+    }
+
+    if (step > firstFormSteps.length + coverageSteps.length - 1) {
+      setFormModuleToShow(2);
+    }
+  }, [step]);
 
   return (
     <Box width="100%" padding="30px">
@@ -390,12 +418,23 @@ const FormModule = () => {
               ) : null;
             })}
 
-            {step - firstFormSteps.length > -1 && (
+            {formModuleToShow === 1 && (
               <InsuranceCoverageComponent
                 indexToShow={step - firstFormSteps.length}
                 nextStep={nextStep}
                 steps={coverageSteps}
                 value={values}
+                setFieldValue={setFieldValue}
+              />
+            )}
+
+            {formModuleToShow === 2 && (
+              <PersonalDataForm
+                indexToShow={
+                  step - (firstFormSteps.length + coverageSteps.length)
+                }
+                nextStep={nextStep}
+                values={values}
                 setFieldValue={setFieldValue}
               />
             )}
