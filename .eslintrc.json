@@ -1,3 +1,13 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["assets", "./src/assets"],
+          ["components", "./src/components"]
+        ]
+      }
+    }
+  }
 }
