@@ -5,13 +5,17 @@ import {
 } from "./styles";
 
 const RadioButtonComponent = (
-  props: React.InputHTMLAttributes<any> & { label: string }
+  props: React.InputHTMLAttributes<any> & {
+    label: string;
+    radioSize?: "sm" | "lg";
+  }
 ) => {
   return (
-    <CustomRadioLabel>
+    <CustomRadioLabel radioSize={props.radioSize ?? "lg"}>
       <CustomRadioInput {...props} />
       <CustomRadioCheckmark
         checked={Boolean(props.checked)}
+        radioSize={props.radioSize ?? "lg"}
         onClick={props.onChange}
       >
         {props.label}

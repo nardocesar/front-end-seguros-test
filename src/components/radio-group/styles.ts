@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import DEFAULT_COLORS from "../../styles/theme/colors";
 
-export const CustomRadioLabel = styled.label`
+export const CustomRadioLabel = styled.label<{ radioSize?: "sm" | "lg" }>`
   display: flex;
   width: 100%;
-  max-width: 170px;
   position: relative;
   cursor: pointer;
+
+  max-width: ${(props) => (props.radioSize === "lg" ? "170px" : "100px")};
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -22,18 +23,22 @@ export const CustomRadioInput = styled.input`
   width: 0;
 `;
 
-export const CustomRadioCheckmark = styled.span<{ checked: boolean }>`
+export const CustomRadioCheckmark = styled.span<{
+  checked: boolean;
+  radioSize?: "sm" | "lg";
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   width: 100%;
   padding: 10px;
-  min-height: 150px;
   border-radius: 20px;
 
+  min-height: ${(props) => (props.radioSize === "lg" ? "150px" : "100px")};
+
   box-shadow: ${(props) =>
-    props.checked ? "0 0 20px rgba(0, 0, 0, 0.25);" : "none"};
+    props.checked ? "0 0 20px rgba(0, 0, 0, 0.25)" : "none"};
   color: ${(props) => (props.checked ? "white" : "black")};
   background-color: ${(props) =>
     props.checked ? DEFAULT_COLORS.orange : DEFAULT_COLORS["light-brown"]};
