@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Box, Heading, Stack, Container } from "@chakra-ui/layout";
+import { Box, Heading, Stack, Container } from "@chakra-ui/react";
 
 import { JumbotronArea } from "./styles";
 
